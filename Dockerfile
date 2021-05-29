@@ -10,9 +10,9 @@ WORKDIR ./thenewsoftheday
 RUN pip3 install -r requirements.txt
 RUN pip3 install -r gpt2requirements.txt
 RUN pip3 install gunicorn
-
+ARG UPLOAD_FOLDER=upload
+ENV UPLOAD_FOLE=$UPLOAD_FOLDER
 #RUN python startup.py #TODO enable after web-server is okay
 WORKDIR ./src/gpt2-server
 #Get the web server running
-CMD ["pwd"]
 CMD ["gunicorn"  , "--bind", "0.0.0.0:8000", "server:app"]
