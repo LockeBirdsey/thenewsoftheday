@@ -8,19 +8,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 @app.route('/')
 def index():
-    return render_template('upload.html')
-
-
-@app.route('/uploader', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        f = request.files['file']
-        f_name = secure_filename(f.filename)
-        f.save(f_name)
-        # TODO This is where we call gpt2
-        # process(f.filename, )
-        print(f)
-        return 'file uploaded successfully'
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
