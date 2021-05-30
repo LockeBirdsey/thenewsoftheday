@@ -17,6 +17,7 @@ class MyStreamListener(tweepy.StreamListener):
         self.tr = TweetRepository()
 
     def on_status(self, status):
+        # TODO need to remove more things
         if status.truncated is True:
             try:
                 content = status.extended_tweet["full_text"]
