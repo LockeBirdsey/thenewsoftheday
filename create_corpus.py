@@ -9,11 +9,13 @@ class CreateCorpus:
         tweet_content = []
         for i in tweets:
             # other preproc?
-            tweet_content.append(i['content'])
+            tweet_content.append(i['text'].replace("\n", " "))
+        tr.close()
+        return tweet_content
 
     def write_to_txt(self, path="./corpus.txt", tweets=None):
         if tweets is None:
             return
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding="utf-8") as f:
             for t in tweets:
-                f.write(t)
+                f.write(t + "\n")
