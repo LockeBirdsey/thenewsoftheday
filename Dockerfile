@@ -19,6 +19,6 @@ RUN pip3 install gunicorn
 
 #WORKDIR ./src/gpt2-server
 #Get the web server running
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["~/thenewsoftheday-master/entrypoint.sh"]
 #CMD ["gunicorn"  , "--bind", "0.0.0.0:8000", "server:app"]
 CMD ['']
