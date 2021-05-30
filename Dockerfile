@@ -3,7 +3,8 @@ ENV LANG=C.UTF-8
 ARG GPT2_MODEL_NAME=124M
 ENV GPT2_MODEL_NAME=$GPT2_MODEL_NAME
 ARG UPLOAD_FOLDER=upload
-ENV UPLOAD_FOLE=$UPLOAD_FOLDER
+ENV UPLOAD_FOLDER=$UPLOAD_FOLDER
+
 
 RUN apt-get update
 RUN apt-get -y install libpq-dev python-dev
@@ -19,6 +20,7 @@ RUN pip3 install gunicorn
 
 #WORKDIR ./src/gpt2-server
 #Get the web server running
-ENTRYPOINT ["~/thenewsoftheday-master/entrypoint.sh"]
+#ENTRYPOINT ["~/thenewsoftheday-master/entrypoint.sh"]
+#CMD ['']
+CMD ['pwd']
 #CMD ["gunicorn"  , "--bind", "0.0.0.0:8000", "server:app"]
-CMD ['']
