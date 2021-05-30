@@ -17,7 +17,6 @@ class MyStreamListener(tweepy.StreamListener):
         self.tr = TweetRepository()
 
     def on_status(self, status):
-        # TODO need to remove more things
         if status.truncated is True:
             try:
                 content = status.extended_tweet["full_text"]
@@ -25,8 +24,7 @@ class MyStreamListener(tweepy.StreamListener):
                 content = status.full_text
         else:
             content = status.text
-        if not hasattr(status, "retweeted_status"):
-            # ignore
+        if self.is_valid_tweet(status):
             try:
                 if langdetect.detect(content) == 'en':
                     self.tr.connect()
@@ -46,9 +44,16 @@ class MyStreamListener(tweepy.StreamListener):
         links = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', string)
         return links
 
+    @staticmethod
+    def is_valid_tweet(status):
+        return not (
+                hasattr(status, "retweeted_status")
+                or status.in_reply_to_status_id_str is not None
+        )
+
 
 class TwitterClient:
-    TWITTER_KEYS = str(Path(os.getcwd()).joinpath("resources").joinpath("keys.yaml"))
+    TWITTER_KEYS = os.environ['TWITTER_KEYS']
 
     def auth_user_to_app(self):
         keys = KeyManager(self.TWITTER_KEYS)

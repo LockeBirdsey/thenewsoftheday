@@ -1,3 +1,7 @@
+import codecs
+import csv
+import re
+
 from tweet_repository import TweetRepository
 
 
@@ -13,9 +17,22 @@ class CreateCorpus:
         tr.close()
         return tweet_content
 
-    def write_to_txt(self, path="./corpus.txt", tweets=None):
+    def write_to_csv(self, path="./corpus.csv", tweets=None):
         if tweets is None:
             return
-        with open(path, 'w', encoding="utf-8") as f:
+        with open(path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(["TEXT"])
             for t in tweets:
-                f.write(t + "\n")
+                ut = self.deEmojify(t).encode('ascii', 'ignore')
+                writer.writerow([ut])
+
+    @staticmethod
+    def deEmojify(text):
+        regex_pattern = re.compile(pattern="["
+                                           u"\U0001F600-\U0001F64F"  # emoticons
+                                           u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                                           u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                                           u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                                           "]+", flags=re.UNICODE)
+        return regex_pattern.sub(r'', text)
