@@ -12,6 +12,7 @@ RUN curl -sLO "https://github.com/LockeBirdsey/thenewsoftheday/archive/refs/head
 
 
 WORKDIR ./thenewsoftheday-master
+RUN chmod +x entrypoint.sh
 RUN pip3 install -r requirements.txt
 RUN pip3 install -r gpt2requirements.txt
 RUN pip3 install gunicorn
